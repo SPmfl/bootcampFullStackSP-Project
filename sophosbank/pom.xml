@@ -14,7 +14,7 @@
 	<name>sophosbank</name>
 	<description>Final project &quot;sophosbank&quot; for Sophos Fullstack bootcamp</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

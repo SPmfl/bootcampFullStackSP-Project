@@ -22,13 +22,15 @@ CREATE TABLE clients(
     PRIMARY KEY(client_id)
 );
 
+CREATE TYPE status_enum AS ENUM ('active','inactive','canceled');
+
 DROP TABLE  IF EXISTS accounts;
 CREATE TABLE accounts(
     id SERIAL,
     client_id INT NOT NULL CHECK (client_id > 0),
     account_type VARCHAR(15),
     account_number INT NOT NULL CHECK(account_number > 0000000000),
-    account_status VARCHAR(15) NOT NULL CHECK(account_status IN ('active','inactive','canceled')) DEFAULT 'active',
+    account_status status_enum NOT NULL DEFAULT 'active',
     account_balance FLOAT4 DEFAULT 0.00,
     account_balance_available FLOAT4 DEFAULT 0.00,
     account_gmf_status BOOLEAN NOT NULL,
@@ -40,17 +42,23 @@ CREATE TABLE accounts(
     CONSTRAINT fk_account FOREIGN KEY (client_id) REFERENCES clients(client_id)
 );
 
+-- account_status VARCHAR(15) NOT NULL CHECK(account_status IN ('active','inactive','canceled')) DEFAULT 'active',
+
+
+CREATE TYPE type_m_enum AS ENUM ('credit','debit');
+
 DROP TABLE  IF EXISTS transactions;
 CREATE TABLE transactions(
     id SERIAL,
     account_number INT NOT NULL,
     transaction_description VARCHAR(256) DEFAULT 'none',
     transaction_value FLOAT4 NOT NULL DEFAULT 0.00,
-    transaction_type_m VARCHAR(10) NOT NULL CHECK (transaction_type_m IN ('credit','debit')),
+    transaction_type_m type_m_enum NOT NULL DEFAULT 'debit',
     transaction_balance FLOAT4 DEFAULT 0.00,
     transaction_balance_available FLOAT4 DEFAULT 0.00,
     transaction_creation_date DATE DEFAULT CURRENT_DATE,
     CONSTRAINT fk_transaction FOREIGN KEY (account_number) REFERENCES accounts(account_number)
 );
  
+    --transaction_type_m VARCHAR(10) NOT NULL CHECK (transaction_type_m IN ('credit','debit')),
 
