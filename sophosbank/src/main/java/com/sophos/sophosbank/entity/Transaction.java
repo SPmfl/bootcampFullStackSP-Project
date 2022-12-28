@@ -1,8 +1,7 @@
 package com.sophos.sophosbank.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -10,11 +9,16 @@ import java.time.LocalDate;
 @Table(name="transactions")
 public class Transaction {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long account_number;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long transaction_id;
+    private long account_number_from;
+    @Nullable
+    private long account_number_to;
     private String transaction_description;
-    private double transaction_value;
     private String transaction_type_m;
+    private double transaction_value;
     private double transaction_balance;
     private double transaction_balance_available;
     private LocalDate transaction_creation_date;
@@ -27,12 +31,28 @@ public class Transaction {
         this.id = id;
     }
 
-    public long getAccount_number() {
-        return account_number;
+    public long getTransaction_id() {
+        return transaction_id;
     }
 
-    public void setAccount_number(long account_number) {
-        this.account_number = account_number;
+    public void setTransaction_id(long transaction_id) {
+        this.transaction_id = transaction_id;
+    }
+
+    public long getAccount_number_from() {
+        return account_number_from;
+    }
+
+    public void setAccount_number_from(long account_number_from) {
+        this.account_number_from = account_number_from;
+    }
+
+    public long getAccount_number_to() {
+        return account_number_to;
+    }
+
+    public void setAccount_number_to(long account_number_to) {
+        this.account_number_to = account_number_to;
     }
 
     public String getTransaction_description() {

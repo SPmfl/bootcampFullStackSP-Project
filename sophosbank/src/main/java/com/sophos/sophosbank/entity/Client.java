@@ -1,22 +1,51 @@
 package com.sophos.sophosbank.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="clients")
+@Table(name="clients",
+        uniqueConstraints =
+        @UniqueConstraint(columnNames = "client_email"))
 public class Client {
+
+    public Client(){}
+
+    public Client(long id,
+                  String id_type,
+                  long client_id,
+                  String client_name,
+                  String client_surname,
+                  LocalDate client_birthdate,
+                  String client_email,
+                  String creation_user,
+                  String last_modification_user,
+                  LocalDateTime last_modification_date,
+                  LocalDate creation_date) {
+        this.id = id;
+        this.id_type = id_type;
+        this.client_id = client_id;
+        this.client_name = client_name;
+        this.client_surname = client_surname;
+        this.client_birthdate = client_birthdate;
+        this.client_email = client_email;
+        this.creation_user = creation_user;
+        this.last_modification_user = last_modification_user;
+        this.last_modification_date = last_modification_date;
+        this.creation_date = creation_date;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String id_type;
     private long client_id;
     private String client_name;
     private String client_surname;
     private LocalDate client_birthdate;
+
     private String client_email;
     private String creation_user;
     private String last_modification_user;
